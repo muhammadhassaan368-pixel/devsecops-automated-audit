@@ -1,0 +1,25 @@
+name: DevSecOps Infrastructure Audit
+
+# 1. When should this pipeline run? (Every time you push code to the main branch)
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  checkov-scan:
+    # 2. What kind of server should GitHub spin up?
+    runs-on: ubuntu-latest
+
+    steps:
+      # 3. Pull your code onto the GitHub server
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 4. Run the Checkov SAST Security Scanner
+      - name: Run Checkov Audit
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: .
+          framework: terraform
+
+          
